@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from 'next/font/google'
 
 /*
  * The default typeface pair, shared by the entry pages and by Electronics, which
- * runs on stock Appica UI tokens. A demo that restyles declares its own font
+ * runs on stock design tokens. A demo that restyles declares its own font
  * beside its root layout and repoints `--font-sans` in its own stylesheet;
  * nothing here has to change for it.
  */

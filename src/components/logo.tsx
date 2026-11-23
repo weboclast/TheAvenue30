@@ -14,7 +14,7 @@ export interface LogoProps {
    */
   variant?: LogoVariant
   /**
-   * Draw the symbol for Appica Club, the loyalty program: the same mark with a
+   * Draw the symbol for The Avenue 30 Club, the loyalty program: the same mark with a
    * star in place of its dot. The wordmark is unaffected, so this does nothing on
    * `variant="wordmark"`.
    * @default false
@@ -23,7 +23,7 @@ export interface LogoProps {
   /**
    * Accessible name, read in place of the artwork. Change it with the brand, and
    * pass `''` where the logo sits beside copy that already names the brand.
-   * @default 'Appica Store'
+   * @default 'The Avenue 30'
    */
   label?: string
   className?: string

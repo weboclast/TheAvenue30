@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { Button } from '@appica/ui-react/button'
-import { APPICA_CLUB_ARTWORK } from '@/components/fashion/account/appica-club-band'
+import { CLUB_ARTWORK } from '@/components/fashion/account/club-band'
 import { Eyebrow } from '@/components/fashion/eyebrow'
 import { APPICA_CLUB_PERKS } from '@/components/rewards/appica-club-perks'
 import { RewardsArtwork } from '@/components/rewards/rewards-artwork'
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
  * program as copy and a rate, so the page quotes what the shopper's own orders
  * would have saved. See `commerce/programs/rewards.ts`.
  */
-export default async function FashionAppicaClubPage() {
+export default async function FashionClubPage() {
   // Unpaginated: the savings figure spans the whole history, which a real
   // backend answers with a sum rather than a page of orders.
   const orders = await listAllAccountOrders('fashion')
@@ -29,7 +29,7 @@ export default async function FashionAppicaClubPage() {
       <section className="bg-background-muted grid overflow-hidden rounded-sm md:grid-cols-2">
         <div className="relative aspect-4/3 md:aspect-auto md:min-h-112">
           <Image
-            src={APPICA_CLUB_ARTWORK}
+            src={CLUB_ARTWORK}
             alt=""
             fill
             preload

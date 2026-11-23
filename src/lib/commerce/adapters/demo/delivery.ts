@@ -80,7 +80,7 @@ const standardTable: ShippingTable = (money) => [
   },
   {
     id: 'pickup',
-    name: 'Pickup at Appica store',
+    name: 'Pickup at The Avenue 30',
     price: money(PRICES.pickup),
     description: '225 W 35th St, New York, ready from 10:00 am',
     arrival: { from: day(1) },

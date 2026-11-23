@@ -9,7 +9,7 @@ const PAGE_LOCK = 'page-locked'
 let holders = 0
 
 /**
- * Holds the page still while `locked`, for a panel Appica UI doesn't lock for,
+ * Holds the page still while `locked`, for a panel the UI library doesn't lock for,
  * such as a `NavigationMenu`: what a popover's `modal` prop does for its own.
  * The lock goes on `<html>`, because Base UI locks `<body>` for modal popups,
  * and 2 locks on 1 element restore each other's styles when either closes.

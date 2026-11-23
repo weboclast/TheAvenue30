@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils'
  *
  * Dragging, keyboard handling, the hidden input, and the accept and size checks
  * come from `react-dropzone`. It is headless - prop getters, no markup or styles
- * of its own - so everything below is ordinary Appica UI.
+ * of its own - so everything below is ordinary UI.
  *
  * Nothing is uploaded. The files stay in the browser as `File` objects and reach
  * the form's own submit handler, which is where a store posts them to its own

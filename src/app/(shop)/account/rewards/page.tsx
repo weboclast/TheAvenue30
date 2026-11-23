@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { buttonVariants } from '@appica/ui-react/button'
 import { accountPath } from '@/components/account/account-paths'
 import { RewardsHistoryDrawer } from '@/components/account/rewards-history-drawer'
-import { AppicaClubBand } from '@/components/fashion/account/appica-club-band'
+import { ClubBand } from '@/components/fashion/account/club-band'
 import { OfferList } from '@/components/fashion/account/offer-list'
 import { ReferralInvite } from '@/components/fashion/account/referral-invite'
 import { ReviewableList } from '@/components/fashion/account/reviewable-list'
@@ -45,7 +45,7 @@ export default async function FashionAccountRewardsPage({ searchParams }: PagePr
 
       <RewardsBalance balance={balance} />
 
-      <AppicaClubBand />
+      <ClubBand />
 
       <OfferList params={params} />
 

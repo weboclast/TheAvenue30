@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'The Avenue 30',
     short_name: 'The Avenue 30',
     description:
-      'A multipurpose Next.js and React eCommerce template built on Appica UI. Cart, checkout, accounts, and order tracking work end to end, ready for your backend.',
+      'A multipurpose Next.js and React eCommerce storefront. Cart, checkout, accounts, and order tracking work end to end, ready for your backend.',
     lang: 'en',
     dir: 'ltr',
     start_url: '/',

@@ -1,8 +1,8 @@
-# Appica Store
+# The Avenue 30
 
-A multipurpose eCommerce template for Next.js and React, built on
-[Appica UI](https://appica.dev/ui). The cart, checkout, accounts, and order
-tracking already work, on sample data you replace when you're ready.
+A multipurpose eCommerce storefront for Next.js and React. The cart,
+checkout, accounts, and order tracking already work, on sample data you
+replace when you're ready.
 
 This file is the quick guide. The full documentation sits next to this folder
 in your download, in `documentation/`: open its `index.html` in your browser. It
@@ -13,7 +13,7 @@ works offline.
 - Node.js 20.19+, 22.13+, or 24+
 - pnpm 9+. npm works too, with `npm run` in place of `pnpm` in the commands
   below. Yarn is not tested.
-- An internet connection: the sample photos load from Appica's media server, and
+- An internet connection: the sample photos load from the media server, and
   fonts from Fontshare download on the first run. `pnpm download-media` saves
   the photos for working offline.
 
@@ -57,26 +57,23 @@ itself in JSDoc, so hover it in your editor.
 
 ## Make it yours
 
-**Colors, fonts, and corners.** The look comes from Appica UI's design tokens,
+**Colors, fonts, and corners.** The look comes from the design tokens,
 such as `--primary` for the brand color and `--radius` for corners. The store's
 tokens close `src/app/globals.css`, and its fonts are set in
 `src/app/layout.tsx`. To get a brand palette for light and dark mode, open
 [appica.dev/ui](https://appica.dev/ui), go to Settings, choose Custom under
 Primary color, and paste the CSS it gives you at the end of the stylesheet.
-Appica UI's [theming guide](https://appica.dev/ui/docs/react/theming) covers the
-rest. A font from Fontshare, such as Satoshi, is downloaded by `pnpm dev` and
-`pnpm build` rather than shipped, because its license doesn't allow sharing the
-file.
+The theming guide covers the rest. A font from Fontshare, such as Satoshi, is downloaded by `pnpm dev` and `pnpm build` rather than shipped, because its license doesn't allow sharing the file.
 
 **Sample data.** Products, categories, filters, and banners are TypeScript files
 in `src/lib/commerce/adapters/demo/data/<demo>/`. Their photos and videos aren't
-in the download: they load from Appica's media server, and
+in the download: they load from the media server, and
 `pnpm download-media` saves them into `public/demo/`. Catalog filters are data:
 add one to the store's `filters.ts`, and the sidebar shows it, with no component
 to change.
 
 **Your backend.** The data reaches the screens through a typed adapter, and the
-sample data is the one adapter the template ships. To connect your platform or
+sample data is the one adapter this store ships. To connect your platform or
 API, write an adapter against the interface and bind it in `config.ts`. No
 screen changes.
 
@@ -110,13 +107,13 @@ SDK is bundled until you do.
 
 ## Right to left
 
-The template ships left to right, but every screen is written so it mirrors.
+The store ships left to right, but every screen is written so it mirrors.
 Layout uses logical properties (`ms-`, `pe-`, `inset-s-`) instead of physical
 left and right, and directional icons carry `rtl:rotate-180`.
 
 Serving the store right to left takes 2 changes in its root layout,
 `src/app/layout.tsx`. Set the language and direction on `<html>`, then wrap the
-tree in Appica UI's `DirectionProvider`:
+tree in the `DirectionProvider`:
 
 ```tsx
 import { DirectionProvider } from '@appica/ui-react/providers/direction-provider'
@@ -140,7 +137,7 @@ Satoshi covers Arabic or Hebrew.
 Open the project in your coding agent and start asking. It picks up the rules on
 its own:
 
-- **[AGENTS.md](AGENTS.md)** carries the conventions, the Appica UI rules, and
+- **[AGENTS.md](AGENTS.md)** carries the conventions, the UI rules, and
   the project layout. [CLAUDE.md](CLAUDE.md) points Claude Code at it, so there's
   only ever a single copy. Each folder in `src/lib` has an `AGENTS.md` of its
   own, which an agent reads when it works in that folder.
@@ -155,7 +152,7 @@ its own:
 | `react-best-practices` | "Review this page for render performance"   |
 | `motion`               | "Give the hero a parallax effect on scroll" |
 
-Agents write better Appica UI code when they can read its documentation, which
+Agents write better UI code when they can read its documentation, which
 is published as plain text for that reason. If yours can fetch web pages, allow
 `appica.dev`. To add a skill of your own, create `.agents/skills/<name>/SKILL.md`
 and run `pnpm sync:skills`.
@@ -172,7 +169,7 @@ and run `pnpm sync:skills`.
 | `pnpm typecheck`                    | Type-check with `tsc --noEmit`                                                          |
 | `pnpm format` / `pnpm format:check` | Prettier, write / report                                                                |
 | `pnpm sync:skills`                  | Regenerate `.claude/skills/` from `.agents/skills/`, after adding or renaming a skill   |
-| `pnpm sync:components`              | Regenerate the Appica UI component list agents read, after `pnpm update '@appica/*'`    |
+| `pnpm sync:components`              | Regenerate the component list agents read, after `pnpm update '@appica/*'`    |
 | `pnpm download-media`               | Save the sample photos and videos into `public/demo/`, to work offline                  |
 
 `pnpm lint:fix && pnpm format` fixes most of what `pnpm verify` reports. After
@@ -189,7 +186,7 @@ followed by `pnpm start` serves the production build with Node.js.
 Before going live, put your brand in the titles, descriptions, and icons, and
 add an Open Graph image. The documentation has the full checklist.
 
-## Updating Appica packages
+## Updating UI packages
 
 ```bash
 pnpm update '@appica/*'
@@ -201,8 +198,7 @@ version you just installed.
 
 ## Support
 
-Questions or a bug? Write to [support@appica.dev](mailto:support@appica.dev).
+Questions or a bug? Write to support@theavenuethirty.com.
 Your purchase includes 6 months of support from the purchase date: answers about
-the template's features and code, and fixes for its bugs. Customization and
-connecting your own services aren't included. On ThemeForest, you can extend
-support to 12 months.
+the store's features and code, and fixes for its bugs. Customization and
+connecting your own services aren't included.

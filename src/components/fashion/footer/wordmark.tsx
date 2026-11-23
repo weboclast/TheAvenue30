@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
  * Outlines rather than live type, painted in `currentColor`; swap the paths for
  * your own brand.
  */
-export function AppicaWordmark({ className }: { className?: string }) {
+export function StoreWordmark({ className }: { className?: string }) {
   // Unique per instance, since `href="#…"` resolves document-wide.
   const prefix = useId().replace(/[^a-zA-Z0-9]/g, '')
 

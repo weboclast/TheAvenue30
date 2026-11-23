@@ -72,7 +72,7 @@ export function CheckoutSignInDrawer({
               <section className="flex flex-col gap-5">
                 <div className="flex flex-col gap-1.5">
                   <h3 className="text-foreground-intense text-2xl font-medium">Guest checkout</h3>
-                  <p className="text-foreground text-sm">Sign up at checkout to grab some awesome Appica perks!</p>
+                  <p className="text-foreground text-sm">Sign up at checkout to grab some awesome The Avenue 30 perks!</p>
                 </div>
                 <Button
                   type="button"

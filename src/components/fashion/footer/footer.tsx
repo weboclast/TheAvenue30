@@ -12,7 +12,7 @@ import { getDepartment } from '@/lib/departments'
 import { legalDocuments, legalLinkLabel } from '@/lib/legal'
 import { cn } from '@/lib/utils'
 import { type NavColumn } from '@/components/fashion/link-column'
-import { AppicaWordmark } from './appica-wordmark'
+import { StoreWordmark } from './wordmark'
 import { FooterNav } from './footer-nav'
 import { NewsletterForm } from './newsletter-form'
 
@@ -180,7 +180,7 @@ export async function Footer({ className }: { className?: string }) {
         </div>
 
         <div className={cn(TILE, 'lg:col-start-2 lg:row-start-2 lg:rounded-t-none lg:pt-0')}>
-          <AppicaWordmark className="text-background-strong" />
+          <StoreWordmark className="text-background-strong" />
         </div>
       </div>
     </footer>

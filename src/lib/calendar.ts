@@ -26,7 +26,7 @@ export function calendarFile(event: CalendarEvent): string {
   const lines = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//Appica//Store//EN',
+    'PRODID:-//The Avenue 30//EN',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     'BEGIN:VEVENT',

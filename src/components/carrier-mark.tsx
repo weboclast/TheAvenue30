@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 
-/*! Appica Store artwork. Exported from the Appica Store design file. */
+/*! Store artwork. Exported from the store design file. */
 
 /**
  * The stand-in mark for a carrier with no artwork of its own, which is most of

@@ -71,7 +71,7 @@ html {
 }
 
 /* Holds the page still under a panel that has taken it over, for the panels
- * that don't get a lock from Appica UI (see `usePageLock`). The gutter keeps the
+ * that don't get a lock from the UI library (see `usePageLock`). The gutter keeps the
  * scrollbar's space while the scrollbar is gone, so nothing shifts sideways. */
 @utility page-locked {
   overflow: hidden;
@@ -281,12 +281,12 @@ html {
 
 /* The base scales, stripped of hue. Primary is built from these same stops.
  *
- * The selectors mirror Appica UI's own, so a forced-light subtree gets these
+ * The selectors mirror the library's own, so a forced-light subtree gets these
  * rather than the library's values.
  *
  * Every token named below has to be named again in `.dark`. `:root` and `.dark`
  * carry the same specificity, and this file loads after the library, so a token
- * declared here on `:root` alone beats Appica's own `.dark` value and keeps its
+ * declared here on `:root` alone beats the library's own `.dark` value and keeps its
  * light value in dark mode. */
 :root,
 .light {

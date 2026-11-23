@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { accountPath } from '@/components/account/account-paths'
 import { AccountFigures } from '@/components/fashion/account/account-figures'
-import { AppicaClubBand } from '@/components/fashion/account/appica-club-band'
+import { ClubBand } from '@/components/fashion/account/club-band'
 import { LatestOrders } from '@/components/fashion/account/latest-orders'
 import { WishlistPreview } from '@/components/fashion/account/wishlist-preview'
 import { Eyebrow } from '@/components/fashion/eyebrow'
@@ -66,7 +66,7 @@ export default async function FashionAccountPage() {
 
       <WishlistPreview className="mb-6" />
 
-      <AppicaClubBand />
+      <ClubBand />
     </>
   )
 }

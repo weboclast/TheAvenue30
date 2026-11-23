@@ -1,7 +1,7 @@
 import { useId } from 'react'
 import { cn } from '@/lib/utils'
 
-/*! Appica Store artwork. Exported from the Appica Store design file. */
+/*! Store artwork. Exported from the store design file. */
 
 /**
  * The pair of loyalty cards beside the program's pitch (see `RewardsPitch`).

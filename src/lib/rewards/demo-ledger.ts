@@ -32,7 +32,7 @@ export function demoLedgerEntries(): RewardsEntry[] {
       id: 'demo-birthday',
       kind: 'birthday',
       at: demoDaysAgo(120),
-      detail: 'Happy birthday from Appica!',
+      detail: 'Happy birthday from The Avenue 30!',
       points: BIRTHDAY_POINTS,
     },
   ]

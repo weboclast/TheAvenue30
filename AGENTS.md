@@ -1,9 +1,7 @@
-# Appica Store
+# The Avenue 30
 
-A multipurpose e-commerce template for Next.js, built on the
-[Appica UI](https://appica.dev/ui) design system. Buyers read this source to
-learn from it and adapt it, so it doubles as the template's documentation:
-every change has to be code worth copying.
+A multipurpose e-commerce storefront for Next.js. Buyers read this source to
+learn from it and adapt it, so every change has to be code worth copying.
 
 ## Commands
 
@@ -12,7 +10,7 @@ every change has to be code worth copying.
   `fonts/fontshare/` (`scripts/fontshare.mjs`): their license forbids
   committing the files.
 - The sample photos and videos are not in the repo. `/demo/` paths load from
-  Appica's media server through a rewrite in `next.config.ts`, and
+  the media server through a rewrite in `next.config.ts`, and
   `pnpm download-media` saves them into `public/demo/`, which Git ignores, for
   offline work. Product photos are listed in each store's `photos.json`.
 - `pnpm verify` runs ESLint, `tsc --noEmit`, a Prettier check, and the skill
@@ -34,7 +32,7 @@ installed from npm.
 and `next build` load, while `pnpm typecheck` runs TypeScript 7 from
 `@typescript/native`. Drop the alias once typescript-eslint supports TypeScript 7.
 
-## Appica UI
+## UI library
 
 The canonical rules ship in `node_modules/@appica/ui-react/agent-rules.md`, and
 they win if this list disagrees. The `appica-ui` skill covers choosing a
@@ -115,8 +113,7 @@ totals exist exactly once, and so does the logic behind each screen:
 `useDeliveryChoice`, `useReviewBrowser`, and `useWishlistBoard`. Redraw a
 screen by changing the markup around its hook.
 
-**Every data call names the store.** The template this store was cut from runs
-several storefronts side by side, so every read takes a `demo` slug, and
+**Every data call names the store.** This store runs several storefronts side by side, so every read takes a `demo` slug, and
 [src/lib/demos.ts](src/lib/demos.ts) registers this store's. Shared sections
 take it as a prop, and link into the store's routes through `accountPath`
 (`components/account/account-paths.ts`), `orderTrackingPath`
@@ -209,7 +206,7 @@ Procedures live in `.agents/skills/`, and load only when a task needs them:
 - `appica-ui`: building or restyling any interface, a demo's stylesheet included.
 - `commerce-adapter`: connecting a real backend in place of the demo data.
 - `react-best-practices`: performance work, such as waterfalls, bundle size, and re-renders.
-- `motion`: animation beyond what CSS or an Appica UI component already does.
+- `motion`: animation beyond what CSS or a UI component already does.
 
 `.claude/skills/` holds generated pointers so Claude Code finds them. Never edit
 those: edit the skill in `.agents/skills/` and run `pnpm sync:skills`.

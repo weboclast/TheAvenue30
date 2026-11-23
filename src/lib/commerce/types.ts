@@ -502,7 +502,7 @@ export interface Product {
   /**
    * Loyalty points this purchase earns, shown as a badge beside the price.
    * Absent when the product earns nothing beyond the program's base rate.
-   * The demo uses it for bonus-earning products. The program itself (Appica Club)
+    * The demo uses it for bonus-earning products. The program itself (The Avenue 30 Club)
    * arrives with the rewards module.
    */
   rewardPoints?: number

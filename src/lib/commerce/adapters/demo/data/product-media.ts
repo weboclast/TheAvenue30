@@ -3,7 +3,7 @@ import type { ProductDrawings, ProductImage, ProductMedia } from '@/lib/commerce
 /*
  * A demo product's photography, looked up in its store's `photos.json`: every
  * photo under that store's `products/` folder, with its pixel size. The files
- * themselves load from Appica's media server, or from `public/demo/` once
+ * themselves load from the media server, or from `public/demo/` once
  * `pnpm download-media` has saved them (see `next.config.ts`), so the list is
  * the single source of truth for what a product has.
  *
