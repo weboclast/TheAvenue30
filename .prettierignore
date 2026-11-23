@@ -1,0 +1,8 @@
+# Agent skills, including vendored third-party ones - keep upstream formatting
+.agents/
+.claude/
+
+# Generated
+pnpm-lock.yaml
+.next/
+next-env.d.ts

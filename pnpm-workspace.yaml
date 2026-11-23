@@ -1,0 +1,21 @@
+# Standalone Next.js app (no workspace packages) — this file only carries pnpm
+# install settings.
+allowBuilds:
+  # sharp ships prebuilt binaries; running its install script forces a source
+  # build that fails under pnpm's strict layout, so skip it (uses prebuilt).
+  sharp: false
+  unrs-resolver: false
+minimumReleaseAgeExclude:
+  - '@appica/ui-react@1.4.0'
+  - '@next/env@16.4.3'
+  - '@next/eslint-plugin-next@16.4.3'
+  - '@next/swc-darwin-arm64@16.4.3'
+  - '@next/swc-darwin-x64@16.4.3'
+  - '@next/swc-linux-arm64-gnu@16.4.3'
+  - '@next/swc-linux-arm64-musl@16.4.3'
+  - '@next/swc-linux-x64-gnu@16.4.3'
+  - '@next/swc-linux-x64-musl@16.4.3'
+  - '@next/swc-win32-arm64-msvc@16.4.3'
+  - '@next/swc-win32-x64-msvc@16.4.3'
+  - eslint-config-next@16.4.3
+  - next@16.4.3

@@ -1,0 +1,623 @@
+@import 'tailwindcss';
+@import '@appica/ui-react/styles.css';
+
+/* Tailwind skips node_modules, so the library's classes have to be scanned
+ * here or its components render unstyled. The path is relative to this file. */
+@source '../../node_modules/@appica/ui-react/dist';
+
+/* ── Theme ──────────────────────────────────────────────────────────────── */
+
+@theme inline {
+  --breakpoint-sm: 31.25rem; /* 500px */
+  --breakpoint-xl: 75rem; /* 1200px */
+  --breakpoint-2xl: 87.5rem; /* 1400px */
+}
+
+/* ── Base ───────────────────────────────────────────────────────────────── */
+
+/* The default typeface, inherited by anything without one of its own.
+ *
+ * A storefront that restyles redeclares these on `:root` in its own stylesheet,
+ * imported after this file so its rules land later and win on source order. */
+:root {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Toasts rise above the bar covering the bottom edge, which publishes its
+ * height: the compare bar, or a buy bar, which gives way to it. */
+[data-slot='toast-viewport'][data-position^='bottom'] {
+  bottom: calc(max(var(--compare-bar-height, 0px), var(--buy-bar-height, 0px)) + 1rem);
+}
+
+/* Focus scrolled into view clears the same bar. */
+html {
+  scroll-padding-bottom: max(var(--compare-bar-height, 0px), var(--buy-bar-height, 0px));
+}
+
+/* ── Utilities ──────────────────────────────────────────────────────────── */
+
+/* Override default Tailwind container */
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+
+  @media (min-width: 31.25rem) {
+    /* sm, 500px */
+    max-width: 95%;
+  }
+  @media (min-width: 48rem) {
+    /* md, 768px */
+    max-width: 95%;
+  }
+  @media (min-width: 64rem) {
+    /* lg, 1024px */
+    max-width: 95%;
+  }
+  @media (min-width: 75rem) {
+    /* xl, 1200px */
+    max-width: 95%;
+  }
+  @media (min-width: 87.5rem) {
+    /* 2xl, 1400px */
+    max-width: 84.5rem; /* 1352px */
+  }
+}
+
+/* Holds the page still under a panel that has taken it over, for the panels
+ * that don't get a lock from Appica UI (see `usePageLock`). The gutter keeps the
+ * scrollbar's space while the scrollbar is gone, so nothing shifts sideways. */
+@utility page-locked {
+  overflow: hidden;
+  scrollbar-gutter: stable;
+}
+
+/* Fades a media layer out at its edges so no seam shows against the page. */
+@utility mask-vignette {
+  mask-image: radial-gradient(closest-side, rgb(0 0 0) 0%, rgb(0 0 0 / 0.7) 85%, transparent 100%);
+}
+
+/* Acknowledgment for toggles that "collect" something: wishlist, compare. Apply
+ * it to an HTML wrapper, never to the <svg>: Chromium rasterizes a transformed
+ * inline SVG at 1x, which looks soft on hi-DPI. */
+@utility animate-icon-pop {
+  animation: icon-pop 350ms cubic-bezier(0.34, 1.96, 0.64, 1);
+}
+
+/* One particle of a burst. Direction, distance, and size come from the element's
+ * own --particle-* properties, its duration and delay from a per-particle style. */
+@utility animate-icon-burst {
+  animation: icon-burst 600ms ease-out forwards;
+}
+
+/* A row fading up into place. `--enter-delay` staggers a group of them,
+ * `--rise-distance` and `--rise-duration` tune the movement.
+ *
+ * An animation and not a `@starting-style` transition, which `next dev` cancels
+ * halfway by injecting its stylesheet a moment after first paint; `backwards`
+ * and not `both`, so a forwards fill does not fight a carousel's own
+ * transitions. Where a transition replays it, keep the two times in step. */
+@utility animate-rise-in {
+  animation: rise-in var(--rise-duration, 500ms) var(--ease-out) var(--enter-delay, 0ms) backwards;
+}
+
+@keyframes rise-in {
+  from {
+    translate: 0 var(--rise-distance, 0.5rem);
+    opacity: 0;
+  }
+}
+
+/* Artwork resolving out of a blur, on the same cue as the copy beside it. */
+@utility animate-focus-in {
+  animation: focus-in var(--focus-duration, 700ms) var(--ease-out) var(--enter-delay, 0ms) backwards;
+}
+
+@keyframes focus-in {
+  from {
+    opacity: 0;
+    filter: blur(var(--focus-blur, 12px));
+  }
+}
+
+/* A layer arriving from the side, blurred until it lands. `--glide-distance` is
+ * how far out it starts (negative comes from the other side), `--enter-delay`
+ * holds it back, so 2 layers given different values read as 2 movements at 2
+ * depths rather than one flat slide.
+ *
+ * It owns `translate` and leaves `transform` alone, for elements already moved
+ * by something that has to keep working the moment this ends, like a parallax
+ * drift. Where a carousel replays the entrance, it transitions the same 3
+ * properties off the same variables, so the 2 stay in step. `--glide-opacity`
+ * is where the fade starts, so `1` leaves it to another layer, and `--glide-ease`
+ * matches the curve to a transition's. */
+@utility animate-glide-in {
+  animation: glide-in var(--glide-duration, 900ms) var(--glide-ease, var(--ease-out)) var(--enter-delay, 0ms) backwards;
+}
+
+@keyframes glide-in {
+  from {
+    translate: var(--glide-distance, 2rem) 0;
+    opacity: var(--glide-opacity, 0);
+    filter: blur(var(--glide-blur, 10px));
+  }
+}
+
+/* The header's filter button, which streams in after the row around it. It grows
+ * out of the row so the search field slides over instead of jumping, and the
+ * negative margin cancels the row's gap while the button still has no width. */
+@utility animate-filters-trigger {
+  animation: filters-trigger 300ms var(--ease-out) backwards;
+}
+
+@keyframes filters-trigger {
+  from {
+    width: 0;
+    margin-inline-end: calc(var(--spacing) * -1);
+    opacity: 0;
+  }
+}
+
+/* A 2-sided tile turning like a coin, held far longer than it turns.
+ * `--flip-duration` sets the cycle and `--flip-delay` offsets one tile from the
+ * next. Needs `transform-3d` on the turning element and `backface-hidden` on
+ * both faces. */
+@utility animate-flip {
+  animation: flip var(--flip-duration, 13s) var(--flip-delay, 0s) infinite;
+}
+
+/* The turn is 5% of the cycle at each end, so a longer `--flip-duration` buys a
+ * longer hold rather than a slower turn. */
+@keyframes flip {
+  0%,
+  45% {
+    transform: rotateY(0deg);
+  }
+  50%,
+  95% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+/* A mark on a photo springing into place. `--enter-delay` staggers a set of them. */
+@utility animate-pop-in {
+  animation: pop-in 500ms var(--ease-spring) var(--enter-delay, 0ms) backwards;
+}
+
+@keyframes pop-in {
+  from {
+    scale: 0.4;
+    opacity: 0;
+  }
+}
+
+/* A band of light passing down a photo while something reads it. Give the band
+ * a third of the photo's height: it starts above the photo and ends below it. */
+@utility animate-scan {
+  animation: scan 1.8s var(--ease-in-out) infinite;
+}
+
+@keyframes scan {
+  from {
+    translate: 0 -100%;
+  }
+  to {
+    translate: 0 300%;
+  }
+}
+
+@keyframes icon-pop {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(0.82);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes icon-burst {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.4);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(calc(var(--particle-x) * 0.25), calc(var(--particle-y) * 0.25)) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--particle-x), var(--particle-y)) scale(var(--particle-end-scale));
+  }
+}
+
+/* Prints `data-print-root` and nothing else. `display` rather than `visibility`,
+ * which keeps the hidden page's layout and pushed the document onto page 2. The
+ * ancestor chain is an overlay, so it is flattened too. */
+@media print {
+  body *:not(:has([data-print-root])):not([data-print-root]):not([data-print-root] *) {
+    display: none !important;
+  }
+
+  body,
+  :has([data-print-root]) {
+    position: static !important;
+    display: block !important;
+    inset: auto !important;
+    transform: none !important;
+    overflow: visible !important;
+    width: auto !important;
+    max-width: none !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: none !important;
+  }
+}
+
+@page {
+  margin: 14mm;
+}
+
+/* The store's own tokens and restyles, after the base so they win on source order. */
+
+:root {
+  --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* The base scales, stripped of hue. Primary is built from these same stops.
+ *
+ * The selectors mirror Appica UI's own, so a forced-light subtree gets these
+ * rather than the library's values.
+ *
+ * Every token named below has to be named again in `.dark`. `:root` and `.dark`
+ * carry the same specificity, and this file loads after the library, so a token
+ * declared here on `:root` alone beats Appica's own `.dark` value and keeps its
+ * light value in dark mode. */
+:root,
+.light {
+  --foreground: oklch(0.439 0 0);
+  --foreground-subtle: oklch(0.708 0 0);
+  --foreground-muted: oklch(0.556 0 0);
+  --foreground-strong: oklch(0.371 0 0);
+  --foreground-emphasis: oklch(0.269 0 0);
+  --foreground-intense: oklch(0.205 0 0);
+
+  --background-subtle: oklch(0.985 0 0);
+  --background-muted: oklch(0.97 0 0);
+  --background-strong: oklch(0.922 0 0);
+  --background-inverse: oklch(0.145 0 0);
+
+  --border: oklch(0.922 0 0);
+  --border-muted: oklch(0.97 0 0);
+  --border-strong: oklch(0.87 0 0);
+  --border-emphasis: oklch(0.708 0 0);
+  --border-intense: oklch(0.556 0 0);
+  --border-inverse: oklch(0.269 0 0);
+  --border-overlay: oklch(0.97 0 0);
+
+  --primary: oklch(0.205 0 0);
+  --primary-subtle: oklch(0.97 0 0);
+  --primary-soft: oklch(0.922 0 0);
+  --primary-muted: oklch(0.371 0 0);
+  --primary-strong: oklch(0.145 0 0);
+
+  --secondary-foreground: oklch(0.145 0 0);
+  --error-foreground: oklch(0.145 0 0);
+  --success-foreground: oklch(0.145 0 0);
+  --warning-foreground: oklch(0.145 0 0);
+  --info-foreground: oklch(0.145 0 0);
+
+  --focus-ring: oklch(0.87 0 0);
+  --focus-ring-input: oklch(0.922 0 0);
+  --focus-ring-primary: oklch(0.87 0 0);
+
+  --shadow-color: oklch(0.556 0 0 / 18%);
+  --selection-color: oklch(0.145 0 0 / 10%);
+}
+
+.dark {
+  --foreground: oklch(0.87 0 0);
+  --foreground-subtle: oklch(0.556 0 0);
+  --foreground-muted: oklch(0.708 0 0);
+  --foreground-strong: oklch(0.922 0 0);
+  --foreground-emphasis: oklch(0.97 0 0);
+  --foreground-intense: oklch(1 0 0);
+  --foreground-inverse: oklch(0.205 0 0);
+
+  --background: oklch(0.145 0 0);
+  --background-subtle: oklch(0.556 0 0 / 8%);
+  --background-muted: oklch(0.205 0 0);
+  --background-strong: oklch(0.269 0 0);
+  --background-inverse: oklch(1 0 0);
+
+  --border: oklch(0.269 0 0);
+  --border-muted: oklch(0.205 0 0);
+  --border-strong: oklch(0.371 0 0);
+  --border-emphasis: oklch(0.439 0 0);
+  --border-intense: oklch(0.556 0 0);
+  --border-inverse: oklch(0.922 0 0);
+  --border-overlay: oklch(0.269 0 0);
+
+  --primary: oklch(1 0 0);
+  --primary-subtle: oklch(0.205 0 0);
+  --primary-soft: oklch(0.269 0 0);
+  --primary-muted: oklch(0.922 0 0);
+  --primary-strong: oklch(1 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+
+  --secondary-foreground: oklch(0.145 0 0);
+  --error-foreground: oklch(0.145 0 0);
+  --success-foreground: oklch(0.145 0 0);
+  --warning-foreground: oklch(0.145 0 0);
+  --info-foreground: oklch(0.145 0 0);
+
+  --focus-ring: oklch(0.371 0 0);
+  --focus-ring-input: oklch(0.269 0 0);
+  --focus-ring-primary: oklch(0.371 0 0);
+
+  --shadow-color: oklch(0 0 0 / 30%);
+  --selection-color: oklch(1 0 0 / 15%);
+}
+
+/* Every button is a pill, or a circle when it is square, set in mono capitals.
+ * A copy button carries a slot of its own. */
+[data-slot='button'],
+[data-slot='copy-button'] {
+  @apply rounded-full font-mono uppercase;
+}
+
+/* Every control a shopper types into or picks from is a pill, and the square
+ * ones are circles. The frames are every element the library draws with
+ * `inputVariants`, so one it adds later needs its slot here too. */
+[data-slot='input'],
+[data-slot='input-wrapper'],
+[data-slot='select-trigger'],
+[data-slot='combobox-input'],
+[data-slot='combobox-chips'],
+[data-slot='combobox-trigger'],
+[data-slot='autocomplete-input'],
+[data-slot='number-field'],
+[data-slot='number-field-decrement'],
+[data-slot='number-field-increment'],
+[data-slot='date-field'],
+[data-slot='date-picker'],
+[data-slot='time-field'],
+[data-slot='otp-field-input'] {
+  @apply rounded-full;
+}
+
+/* A box for paragraphs cannot be a pill, so it takes the roundest radius that
+ * still reads as a box. */
+[data-slot='textarea'],
+[data-slot='textarea-wrapper'] {
+  @apply rounded-2xl;
+}
+
+/* Inside a clearable frame the textarea is only the scroller, and a radius of
+ * its own clips the first letter of its first line. */
+[data-slot='textarea-wrapper'] [data-slot='textarea'] {
+  @apply rounded-none;
+}
+
+/* Field labels a step up from the library's: Satoshi sets smaller than the
+ * default sans. */
+[data-slot='field-label'] {
+  @apply text-base;
+}
+
+/* Tables too, like the rewards history. */
+[data-slot='table'] {
+  @apply text-sm;
+}
+
+/* The checkout's option cards take the tile radius, with the panel inside
+ * concentric to it across the gap the library leaves. */
+[data-slot='choice-option'] {
+  @apply rounded-sm;
+}
+
+[data-slot='choice-option-panel'] {
+  @apply rounded-3xs;
+}
+
+[data-slot='choice-option-label'] {
+  @apply text-lg;
+}
+
+[data-slot='choice-option-description'] {
+  @apply text-base;
+}
+
+/* Built like buttons but carrying slots of their own, so the button rule never
+ * reaches them. Shape only, and a tab's indicator inherits its radius from these. */
+[data-slot='toggle'],
+[data-slot='chip'],
+[data-slot='tabs-list'],
+[data-slot='tabs-trigger'],
+[data-slot='tabs-trigger-inner'],
+[data-slot='pagination-link'],
+[data-slot='navigation-link'],
+[data-slot='navigation-menu-link'],
+[data-slot='navigation-menu-trigger'],
+[data-slot='drawer-close-button'],
+[data-slot='dialog-close-button'] {
+  @apply rounded-full;
+}
+
+/* Tabs are labeled like the buttons beside them. A trigger is a `<button>`,
+ * which does not inherit `text-transform`, so the capitals are set on it. */
+[data-slot='tabs-trigger'] {
+  @apply font-mono uppercase;
+}
+
+/* The active tab is outlined rather than lifted. */
+[data-slot='tabs-indicator'] {
+  @apply border shadow-none;
+}
+
+/* Badges are set in mono capitals, like the buttons. Secondary ones, like an
+ * address's "Default", are neutral rather than tinted. */
+[data-slot='badge'] {
+  @apply font-mono uppercase;
+}
+
+[data-slot='badge'][data-variant='secondary'] {
+  @apply bg-background-strong text-foreground-intense;
+}
+
+/* An article's photographs take the tile radius. Its pull quotes drop the
+ * rule for a size up, attributed in mono capitals. */
+[data-slot='post-figure-image'] {
+  @apply rounded-sm;
+}
+
+[data-slot='post-quote'] {
+  @apply my-6 border-s-0 ps-0;
+}
+
+[data-slot='post-quote'] blockquote {
+  @apply text-2xl font-normal text-balance md:text-3xl;
+}
+
+[data-slot='post-quote'] [data-slot='post-caption'] {
+  @apply font-mono text-xs uppercase;
+}
+
+/* Account sections take the tile radius and solid rules. A panel's padding is
+ * the gap that keeps the cards inside concentric. */
+[data-slot='account-panel'] {
+  @apply rounded-sm p-1.5;
+}
+
+[data-slot='account-panel-item'] {
+  @apply rounded-3xs;
+}
+
+[data-slot='account-card'] {
+  @apply rounded-sm;
+}
+
+[data-slot='account-rule'] {
+  @apply border-border border-solid;
+}
+
+/* Empty states go without an icon. */
+[data-slot='account-empty-icon'] {
+  @apply hidden;
+}
+
+/* Account titles and copy a step up, like the field labels. */
+[data-slot='account-title'] {
+  @apply text-lg;
+}
+
+[data-slot='account-copy'] {
+  @apply text-base;
+}
+
+/* The loyalty pitch's headline a step up too. */
+[data-slot='rewards-pitch-title'] {
+  @apply text-base;
+}
+
+/* The 404's eyebrow and its categories' heading, in the mono capitals of every eyebrow. */
+[data-slot='not-found-eyebrow'],
+[data-slot='not-found-categories-title'] {
+  @apply text-foreground-muted font-mono text-sm font-normal uppercase;
+}
+
+/* Dialog panels take the tile radius. A framed one keeps its glass, concentric
+ * around the panel across the library's `p-1.5`; a nested alert dialog drops its
+ * frame and the popup becomes the panel. */
+[data-slot='dialog-popup'][data-frame],
+[data-slot='alert-dialog-popup'][data-frame]:not([data-nested]) {
+  @apply rounded-[calc(var(--radius-sm)+--spacing(1.5))];
+}
+
+[data-slot='dialog-popup']:not([data-frame]),
+[data-slot='alert-dialog-popup']:not([data-frame]),
+[data-slot='alert-dialog-popup'][data-nested],
+[data-slot='dialog-popup'][data-frame] > [data-slot='dialog-content'],
+[data-slot='alert-dialog-popup'][data-frame]:not([data-nested]) > [data-slot='alert-dialog-content'] {
+  @apply rounded-sm;
+}
+
+/* Drawers are square and flush with the viewport, keeping the glass frame only
+ * on the edge facing the page, where the handle sits. Sides are logical, as the
+ * library lays them out. */
+[data-slot='drawer-popup'],
+[data-slot='drawer-content'] {
+  @apply rounded-none;
+}
+
+[data-slot='drawer-viewport']:has(> [data-swipe-direction='left']),
+[data-slot='drawer-popup'][data-swipe-direction='left'] {
+  @apply border-y-0 border-s-0 py-0 ps-0;
+}
+
+[data-slot='drawer-viewport']:has(> [data-swipe-direction='right']),
+[data-slot='drawer-popup'][data-swipe-direction='right'] {
+  @apply border-y-0 border-e-0 py-0 pe-0;
+}
+
+[data-slot='drawer-viewport']:has(> [data-swipe-direction='down']),
+[data-slot='drawer-popup'][data-swipe-direction='down'] {
+  @apply border-x-0 border-b-0 px-0 pb-0;
+}
+
+[data-slot='drawer-viewport']:has(> [data-swipe-direction='up']),
+[data-slot='drawer-popup'][data-swipe-direction='up'] {
+  @apply border-x-0 border-t-0 px-0 pt-0;
+}
+
+/* The header's bar stays pinned, so a jump to an anchor stops below it and
+ * anything sticky clears it by `--header-height`. Keep both in step with the
+ * bar's `h-14`. */
+html {
+  --header-height: --spacing(14);
+  @apply scroll-pt-14;
+}
+
+/* A catalog pins its toolbar under the bar too, and flags `<html>` while it is
+ * there. Keep in step with its `top-12` and `h-16`. */
+html[data-catalog-toolbar] {
+  @apply scroll-pt-28;
+}
+
+/* The shopper's turns are neutral rather than tinted, as in the product page's questions. */
+[data-slot='shopping-assistant-message'][data-from='shopper'] {
+  @apply bg-background-strong text-foreground-intense;
+}
+
+/* The floating panel takes the smaller radius, and the composer the pill every field and button wears. */
+[data-slot='shopping-assistant-panel'] {
+  @apply rounded-sm;
+}
+[data-slot='shopping-assistant-composer'] :is([data-slot='toolbar'], [data-slot='toolbar-button']) {
+  @apply rounded-full;
+}
+
+/* Horizontal groups only. A vertical one needs the same pair on `t` and `b`. */
+[data-slot='button-group'] > [data-slot='button'] {
+  &:not(:first-of-type) {
+    @apply rounded-s-none;
+  }
+  &:not(:last-of-type) {
+    @apply rounded-e-none;
+  }
+}
